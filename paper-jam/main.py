@@ -7,11 +7,11 @@
 from gradio_client import Client, handle_file
 import shutil
 
-YOUR_TOKEN = ... # COPY YOUR HF TOKEN HERE
+# YOUR_TOKEN = ... # COPY YOUR HF TOKEN HERE
 
 # Create a client object that points to the Gradio (Hugging Face) Space where our app runs.
 # "secret_key" is your Hugging Face token if the Space is private or requires authentication.
-client = Client("turome-learning/TRELLIS", hf_token=YOUR_TOKEN)
+client = Client("tur-learning/TRELLIS") # hf_token=YOUR_TOKEN)
 
 # 1. Start a session on the remote app (optional in many cases, but some apps require it).
 #    This can create a dedicated folder or initialize user-specific state on the server side.
@@ -21,7 +21,7 @@ client.predict(api_name="/start_session")
 #    "handle_file(path_to_image)" tells the client to either upload a local file or download
 #    from a remote URL, so the server will receive it in the correct format for the "image" input.
 
-image_path = ... # COPY IMAGE PATH HERE
+image_path = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Buckingham_Palace_UK.jpg/1920px-Buckingham_Palace_UK.jpg"
 
 processed_image = client.predict(
     image=handle_file(image_path),
@@ -33,7 +33,7 @@ print("Server returned path:", processed_image)
 #    Here, we are asking the server to randomize the seed, but specifying "42" as a fallback.
 #    The final seed used by the server is returned. 
 final_seed = client.predict(
-    randomize_seed=True,  # if True, the server picks a random seed
+    randomize_seed=False,  # if True, the server picks a random seed
     seed=42,              # if randomize_seed=False, this would be used
     api_name="/get_seed"
 )
